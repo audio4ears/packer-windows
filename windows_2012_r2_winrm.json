@@ -72,7 +72,7 @@
     {
       "type": "windows-shell",
       "scripts": [
-        "/scripts/_packer_config.cmd",
+        "./scripts/_packer_config.cmd",
         "./scripts/vmtool.bat",
         "./scripts/chef.bat",
         "./scripts/vagrant-ssh.bat",
