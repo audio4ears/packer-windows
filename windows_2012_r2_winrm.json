@@ -48,7 +48,9 @@
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1",
         "./scripts/openssh.ps1",
-        "./scripts/oracle-cert.cer"
+        "./scripts/oracle-cert.cer",
+        "./scripts/fixnetwork.ps1",
+        "./scripts/install-winrm.cmd"
       ],
       "vboxmanage": [
         [
