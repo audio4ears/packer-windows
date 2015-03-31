@@ -30,13 +30,12 @@
                         <ModifyPartition wcm:action="add">
                             <Active>true</Active>
                             <Format>NTFS</Format>
-                            <Label>boot</Label>
+                            <Label>System Reserved</Label>
                             <Order>1</Order>
                             <PartitionID>1</PartitionID>
                         </ModifyPartition>
                         <ModifyPartition wcm:action="add">
                             <Format>NTFS</Format>
-                            <Label>Windows 2012 R2</Label>
                             <Letter>C</Letter>
                             <Order>2</Order>
                             <PartitionID>2</PartitionID>
@@ -263,8 +262,8 @@
                 <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
                 <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
                 <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
-                <NetworkLocation>Home</NetworkLocation>
-                <ProtectYourPC>1</ProtectYourPC>
+                <NetworkLocation>Work</NetworkLocation>
+                <ProtectYourPC>3</ProtectYourPC>
             </OOBE>
             <UserAccounts>
                 <AdministratorPassword>
@@ -284,6 +283,11 @@
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>
+            <WindowsFeatures>
+                <ShowMediaCenter>false</ShowMediaCenter>
+                <ShowWindowsMediaPlayer>false</ShowWindowsMediaPlayer>
+                <ShowWindowsMail>false</ShowWindowsMail>
+            </WindowsFeatures>
             <RegisteredOwner/>
         </component>
     </settings>
