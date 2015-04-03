@@ -48,22 +48,16 @@ echo ==^> Show Run command in Start Menu
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /f /v Start_ShowRun /t REG_DWORD /d 1
 
 
-title Setting task bar personalization. Please wait...
+title Setting UI personalization. Please wait...
 
 echo ==^> Set taskbar icons: small
+:: Default is 0 - Display Large Icons
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /f /v TaskbarSmallIcons /t REG_QWORD /d 1
-
-
-title Setting start menu personalization. Please wait...
-
 echo ==^> Show Administrative Tools in Start Menu
 :: Default is 0 - Don't Show Administrator Tools
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /f /v StartMenuAdminTools /t REG_DWORD /d 1
-
-
-title Setting login menu personalization. Please wait...
-
 echo ==^> Disable available user names at login
+:: Default is 0 - Display Last UserName
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /f /v dontdisplaylastusername /t REG_DWORD /d 1
 
 
