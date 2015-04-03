@@ -89,6 +89,47 @@
             <IEHardenAdmin>false</IEHardenAdmin>
             <IEHardenUser>false</IEHardenUser>
         </component>
+        <component name="Microsoft-Windows-IE-InternetExplorer" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SearchScopes>
+                <Scope wcm:action="add">
+                    <ScopeDefault>true</ScopeDefault>
+                    <ScopeDisplayName>Google</ScopeDisplayName>
+                    <ScopeKey>Google</ScopeKey>
+                    <ScopeUrl>http://www.google.com/search?q={searchTerms}</ScopeUrl>
+                </Scope>
+            </SearchScopes>
+            <DisableAccelerators>true</DisableAccelerators>
+            <DisableFirstRunWizard>true</DisableFirstRunWizard>
+            <Home_Page>about:blank</Home_Page>
+        </component>
+        <component name="Microsoft-Windows-IE-InternetExplorer" processorArchitecture="wow64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SearchScopes>
+                <Scope wcm:action="add">
+                    <ScopeDefault>true</ScopeDefault>
+                    <ScopeDisplayName>Google</ScopeDisplayName>
+                    <ScopeKey>Google</ScopeKey>
+                    <ScopeUrl>http://www.google.com/search?q={searchTerms}</ScopeUrl>
+                </Scope>
+            </SearchScopes>
+            <DisableAccelerators>true</DisableAccelerators>
+            <DisableFirstRunWizard>true</DisableFirstRunWizard>
+            <Home_Page>about:blank</Home_Page>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <fDenyTSConnections>false</fDenyTSConnections>
+        </component>
+        <component name="Networking-MPSSVC-Svc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <FirewallGroups>
+                <FirewallGroup wcm:action="add" wcm:keyValue="RemoteDesktop">
+                    <Active>true</Active>
+                    <Group>Remote Desktop</Group>
+                    <Profile>all</Profile>
+                </FirewallGroup>
+            </FirewallGroups>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-RDP-WinStationExtensions" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UserAuthentication>0</UserAuthentication>
+        </component>
         <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-OutOfBoxExperience" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
             <DoNotOpenInitialConfigurationTasksAtLogon>true</DoNotOpenInitialConfigurationTasksAtLogon>
         </component>
@@ -108,39 +149,15 @@
             </AutoLogon>
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>%SystemRoot%\System32\reg.exe ADD HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ /v HideFileExt /t REG_DWORD /d 0 /f</CommandLine>
-                    <Order>1</Order>
-                    <Description>Show file extensions in Explorer</Description>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>%SystemRoot%\System32\reg.exe ADD HKCU\Console /v QuickEdit /t REG_DWORD /d 1 /f</CommandLine>
-                    <Order>2</Order>
-                    <Description>Enable QuickEdit mode</Description>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>%SystemRoot%\System32\reg.exe ADD HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ /v Start_ShowRun /t REG_DWORD /d 1 /f</CommandLine>
-                    <Order>3</Order>
-                    <Description>Show Run command in Start Menu</Description>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>%SystemRoot%\System32\reg.exe ADD HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ /v StartMenuAdminTools /t REG_DWORD /d 1 /f</CommandLine>
-                    <Order>4</Order>
-                    <Description>Show Administrative Tools in Start Menu</Description>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>%SystemRoot%\System32\reg.exe ADD HKLM\SYSTEM\CurrentControlSet\Control\Power\ /v HibernateFileSizePercent /t REG_DWORD /d 0 /f</CommandLine>
-                    <Order>5</Order>
-                    <Description>Zero Hibernation File</Description>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>%SystemRoot%\System32\reg.exe ADD HKLM\SYSTEM\CurrentControlSet\Control\Power\ /v HibernateEnabled /t REG_DWORD /d 0 /f</CommandLine>
-                    <Order>6</Order>
-                    <Description>Disable Hibernation Mode</Description>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c wmic useraccount where "name='vagrant'" set PasswordExpires=FALSE</CommandLine>
-                    <Order>7</Order>
+                    <Order>1</Order>
                     <Description>Disable password expiration for vagrant user</Description>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <CommandLine>cmd.exe /c a:customize-windows.bat</CommandLine>
+                    <Description>Customize Windowss</Description>
+                    <Order>2</Order>
+                    <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\openssh.ps1 -AutoStart</CommandLine>
@@ -148,7 +165,7 @@
                     <Order>97</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
-                <!-- WITH WINDOWS UPDATES -->
+                <!-- WITH WINDOWS UPDATES
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c a:\microsoft-updates.bat</CommandLine>
                     <Order>98</Order>
@@ -160,7 +177,7 @@
                     <Order>99</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
-                <!-- END WITH WINDOWS UPDATES -->
+                     END WITH WINDOWS UPDATES -->
                 <!-- Install WinRM must be last action. VM Guest addiontions will mount as soon as WinRM functionality is available -->
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c a:\install-winrm.cmd</CommandLine>
