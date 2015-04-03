@@ -53,6 +53,9 @@ title Setting UI personalization. Please wait...
 echo ==^> Set taskbar icons: small
 :: Default is 0 - Display Large Icons
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /f /v TaskbarSmallIcons /t REG_QWORD /d 1
+echo ==^> Set Control Panel icons: small
+:: Default is 0 - Display Large Icons
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /f /v AllItemsIconView /t REG_QWORD /d 1
 echo ==^> Show Administrative Tools in Start Menu
 :: Default is 0 - Don't Show Administrator Tools
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /f /v StartMenuAdminTools /t REG_DWORD /d 1
