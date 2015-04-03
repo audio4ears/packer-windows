@@ -4,8 +4,8 @@
 Vagrant.require_version ">= 1.6.2"
 
 Vagrant.configure("2") do |config|
-    config.vm.define "vagrant-windows-2012-r2"
-    config.vm.box = "windows_2012_r2"
+    config.vm.define "vagrant-win2012r2-standard"
+    config.vm.box = "win2012r2-standard"
     config.vm.communicator = "winrm"
 
     # Admin user name and password
@@ -14,11 +14,14 @@ Vagrant.configure("2") do |config|
 
     config.vm.guest = :windows
     config.windows.halt_timeout = 15
-
+    
+    # Port forward WinRM and RDP
     config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true
     config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+    # Port forward SSH
     config.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", auto_correct: true
 
+    # VirtualBox
     config.vm.provider :virtualbox do |v, override|
         #v.gui = true
         v.customize ["modifyvm", :id, "--memory", 2048]
@@ -26,6 +29,7 @@ Vagrant.configure("2") do |config|
         v.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
     end
 
+    # VMWare Fusion
     config.vm.provider :vmware_fusion do |v, override|
         #v.gui = true
         v.vmx["memsize"] = "2048"
@@ -36,6 +40,7 @@ Vagrant.configure("2") do |config|
         v.vmx["scsi0.virtualDev"] = "lsisas1068"
     end
 
+    # VMWare Workstation
     config.vm.provider :vmware_workstation do |v, override|
         #v.gui = true
         v.vmx["memsize"] = "2048"
