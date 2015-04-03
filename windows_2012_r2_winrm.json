@@ -104,7 +104,7 @@
     {
       "type": "vagrant",
       "keep_input_artifact": false,
-      "output": "windows_2012_r2_winrm_{{.Provider}}.box",
+      "output": "box/{{.Provider}}/win2012r2-standard.box",
       "vagrantfile_template": "vagrantfile-windows_2012_r2.template"
     }
   ]
