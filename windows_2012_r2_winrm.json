@@ -1,4 +1,15 @@
 {
+  "variables": {
+    "iso_checksum": "78bff6565f178ed08ab534397fe44845",
+    "iso_checksum_type": "md5",
+    "iso_url": "./iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso",
+    "headless": "false",
+    "boot_wait": "2m",
+    "winrm_username": "vagrant",
+    "winrm_password": "vagrant",
+    "winrm_wait_timeout": "10m",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
+  },
   "builders": [
     {
       "type": "vmware-windows-iso",
@@ -18,6 +29,7 @@
       "vnc_port_max": 5980,
       "floppy_files": [
         "./answer_files/2012_r2/Autounattend.xml",
+        "./scripts/_packer_config.cmd",
         "./scripts/oracle-cert.cer",
         "./scripts/customize-windows.bat",
         "./scripts/openssh.ps1",
@@ -49,6 +61,7 @@
       "disk_size": 61440,
       "floppy_files": [
         "./answer_files/2012_r2/Autounattend.xml",
+        "./scripts/_packer_config.cmd",
         "./scripts/oracle-cert.cer",
         "./scripts/customize-windows.bat",
         "./scripts/openssh.ps1",
@@ -94,16 +107,5 @@
       "output": "windows_2012_r2_winrm_{{.Provider}}.box",
       "vagrantfile_template": "vagrantfile-windows_2012_r2.template"
     }
-  ],
-  "variables": {
-    "iso_checksum": "{{ user `iso_checksum` }}",
-    "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-    "iso_url": "{{ user `iso_url` }}",
-    "headless": "{{ user `headless` }}",
-    "boot_wait": "{{ user `boot_wait` }}",
-    "winrm_username": "{{ user `winrm_username` }}",
-    "winrm_password": "{{ user `winrm_password` }}",
-    "winrm_wait_timeout": "{{ user `winrm_wait_timeout` }}",
-    "shutdown_command": "{{ user `shutdown_command` }}"
-  }
+  ]
 }
