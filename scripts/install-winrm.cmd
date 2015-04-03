@@ -52,7 +52,7 @@ call winrm quickconfig -transport:http
 call winrm set winrm/config @{MaxTimeoutms="1800000"}
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm set winrm/config @{MaxTimeoutms="1800000"}
 
-call winrm set winrm/config/winrs @{MaxMemoryPerShellMB="800"}
+call winrm set winrm/config/winrs @{MaxMemoryPerShellMB="1024"}
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm set winrm/config/winrs @{MaxMemoryPerShellMB="1024"}
 
 call winrm set winrm/config/service @{AllowUnencrypted="true"}
@@ -77,7 +77,6 @@ sc query winrm | findstr "RUNNING" >nul
 if errorlevel 1 goto winrm_not_running
 
 echo ==^> Stopping winrm service
-
 sc stop winrm
 
 :is_winrm_running
@@ -93,9 +92,11 @@ echo ==^> Unblocking WinRM port 5985 on the firewall
 netsh advfirewall firewall delete rule name="winrm"
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall delete rule name="winrm"
 
+timeout 1
+
 echo ==^> Enable firewall groups
 :: see http://social.technet.microsoft.com/Forums/windowsserver/en-US/a1e65f0f-2550-49ae-aee2-56a9bdcfb8fb/windows-7-remote-administration-firewall-group?forum=winserverManagement
-ver | findstr /i "6\.[2-9]\."
+ver | findstr /i "6\.[2-9]\." >nul
 if errorlevel 1 ( 
   echo ==^> Enabling Remote Administration firewall group
   :: pre win 8/server 2012
@@ -111,7 +112,10 @@ if errorlevel 1 (
 netsh advfirewall firewall add rule name="winrm" dir=in action=allow protocol=TCP localport=5985
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall add rule name="winrm"  dir=in action=allow protocol=TCP localport=5985
 
-:: wait for firewall groups to enable
+echo ==^> Starting winrm service
+sc start winrm
+
+:: wait for winrm service to finish starting
 timeout 5
 
 :exit0
