@@ -165,7 +165,7 @@
                     <Order>97</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
-                <!-- WITH WINDOWS UPDATES
+                <!-- WITH WINDOWS UPDATES -->
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c a:\microsoft-updates.bat</CommandLine>
                     <Order>98</Order>
@@ -177,7 +177,7 @@
                     <Order>99</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
-                     END WITH WINDOWS UPDATES -->
+                <!-- END WITH WINDOWS UPDATES -->
                 <!-- Install WinRM must be last action. VM Guest addiontions will mount as soon as WinRM functionality is available -->
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c a:\install-winrm.cmd</CommandLine>
