@@ -1,5 +1,6 @@
 :: stop 'Windows Update' service
-net stop wuauserv
+sc stop wuauserv
+timeout 5
 
 :: enable 'Microsoft Updates'
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v EnableFeaturedSoftware /t REG_DWORD /d 1 /f
@@ -13,4 +14,5 @@ echo Set NewUpdateService = ServiceManager.AddService2("7971f918-a847-4430-9279-
 cscript A:\temp.vbs
 
 :: start 'Windows Update' service
-net start wuauserv
+sc start wuauserv
+timeout 5
