@@ -30,10 +30,8 @@ function Check-ContinueRestartOrEnd() {
                 Install-WindowsUpdates
             } elseif ($script:Cycles -gt $global:MaxCycles) {
                 LogWrite "Exceeded Cycle Count - Stopping"
-                Invoke-Expression "a:\openssh.ps1 -AutoStart"
             } else {
                 LogWrite "Done Installing Windows Updates"
-                Invoke-Expression "a:\openssh.ps1 -AutoStart"
             }
         }
         1 {
@@ -45,8 +43,10 @@ function Check-ContinueRestartOrEnd() {
                 LogWrite "Restart Registry Entry Exists Already"
             }
 
-            LogWrite "Restart Required - Restarting..."
-            Restart-Computer
+            # LogWrite "Restart Required - Restarting..."
+            LogWrite "Restart Required - Please restart at earliest convenience..."
+            # @TODO Need to Handle restarts better before implmenting
+            # Restart-Computer
         }
         default {
             LogWrite "Unsure If A Restart Is Required"
@@ -125,7 +125,6 @@ function Install-WindowsUpdates() {
         LogWrite 'No updates available to install...'
         $global:MoreUpdates=0
         $global:RestartRequired=0
-        Invoke-Expression "a:\openssh.ps1 -AutoStart"
         break
     }
 
@@ -176,7 +175,7 @@ function Check-WindowsUpdates() {
     $script:maxAttempts = 12
     while(-not $script:successful -and $script:attempts -lt $script:maxAttempts) {
         try {
-            $script:SearchResult = $script:UpdateSearcher.Search("IsInstalled=0 and Type='Software' and IsHidden=0")
+            $script:SearchResult = $script:UpdateSearcher.Search("IsInstalled=0 and IsHidden=0 and BrowseOnly=0 and Type='Software'")
             $script:successful = $TRUE
         } catch {
             LogWrite $_.Exception | Format-List -force
