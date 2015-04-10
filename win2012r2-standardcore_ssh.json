@@ -93,7 +93,7 @@
       "type": "vagrant",
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/win2012r2-standardcore.box",
-      "vagrantfile_template": "vagrant_files/vagrantfile-win2012r2-standardcore.template"
+      "vagrantfile_template": "vagrant_files/vagrantfile-win2012r2-standardcore_ssh.template"
     }
   ]
 }

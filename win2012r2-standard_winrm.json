@@ -7,7 +7,7 @@
     "boot_wait": "2m",
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
-    "winrm_wait_timeout": "10m",
+    "winrm_wait_timeout": "2h",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
   },
   "builders": [
@@ -28,7 +28,7 @@
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
-        "./answer_files/win2012r2-standard/Autounattend.xml",
+        "./answer_files/win2012r2-standard_winrm/Autounattend.xml",
         "./scripts/_packer_config.cmd",
         "./scripts/oracle-cert.cer",
         "./scripts/customize-windows.bat",
@@ -60,11 +60,13 @@
       "guest_os_type": "Windows2012_64",
       "disk_size": 61440,
       "floppy_files": [
-        "./answer_files/win2012r2-standard/Autounattend.xml",
+        "./answer_files/win2012r2-standard_winrm/Autounattend.xml",
         "./scripts/_packer_config.cmd",
         "./scripts/oracle-cert.cer",
         "./scripts/customize-windows.bat",
         "./scripts/openssh.ps1",
+        "./scripts/microsoft-updates.bat",
+        "./scripts/win-updates.ps1",
         "./scripts/fixnetwork.ps1",
         "./scripts/install-winrm.cmd"
       ],
@@ -88,15 +90,12 @@
     {
       "type": "windows-shell",
       "scripts": [
-        "./scripts/_packer_config.cmd",
         "./scripts/vmtool.bat",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
         "./scripts/chef.bat",
         "./scripts/vagrant-ssh.bat",
         "./scripts/compile-dotnet-assemblies.bat",
         "./scripts/disable-auto-logon.bat",
-        "./scripts/compact.bat"
+        "./scripts/compact.bat"   
       ]
     }
   ],
@@ -105,7 +104,7 @@
       "type": "vagrant",
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/win2012r2-standard.box",
-      "vagrantfile_template": "vagrant_files/vagrantfile-win2012r2-standard.template"
+      "vagrantfile_template": "vagrant_files/vagrantfile-win2012r2-standard_winrm.template"
     }
   ]
 }

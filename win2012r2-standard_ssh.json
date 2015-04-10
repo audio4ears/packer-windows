@@ -28,7 +28,7 @@
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
-        "./answer_files/win2012r2-standard/Autounattend.xml",
+        "./answer_files/win2012r2-standard_ssh/Autounattend.xml",
         "./scripts/_packer_config.cmd",
         "./scripts/oracle-cert.cer",
         "./scripts/customize-windows.bat",
@@ -60,7 +60,7 @@
       "guest_os_type": "Windows2012_64",
       "disk_size": 61440,
       "floppy_files": [
-        "./answer_files/win2012r2-standard/Autounattend.xml",
+        "./answer_files/win2012r2-standard_ssh/Autounattend.xml",
         "./scripts/_packer_config.cmd",
         "./scripts/oracle-cert.cer",
         "./scripts/customize-windows.bat",
@@ -113,7 +113,7 @@
       "type": "vagrant",
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/win2012r2-standard.box",
-      "vagrantfile_template": "vagrant_files/vagrantfile-win2012r2-standard.template"
+      "vagrantfile_template": "vagrant_files/vagrantfile-win2012r2-standard_ssh.template"
     }
   ]
 }
