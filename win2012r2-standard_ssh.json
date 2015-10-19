@@ -1,8 +1,8 @@
 {
   "variables": {
+    "iso_url": "./iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso",
     "iso_checksum": "78bff6565f178ed08ab534397fe44845",
     "iso_checksum_type": "md5",
-    "iso_url": "./iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso",
     "headless": "false",
     "boot_wait": "2m",
     "ssh_username": "vagrant",
@@ -13,9 +13,9 @@
   "builders": [
     {
       "type": "vmware-iso",
+      "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-      "iso_url": "{{ user `iso_url` }}",
       "headless": "{{ user `headless` }}",
       "boot_wait": "{{ user `boot_wait` }}",
       "ssh_username": "{{ user `ssh_username` }}",
@@ -48,9 +48,9 @@
     },
     {
       "type": "virtualbox-iso",
+      "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-      "iso_url": "{{ user `iso_url` }}",
       "headless": "{{ user `headless` }}",
       "boot_wait": "{{ user `boot_wait` }}",
       "ssh_username": "{{ user `ssh_username` }}",

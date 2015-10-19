@@ -1,26 +1,43 @@
 {
+  "variables": {
+    "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
+    "iso_checksum_type": "md5",
+    "iso_checksum": "5e4ecb86fd8619641f1d58f96e8561ec",
+    "headless": "false",
+    "boot_wait": "2m",
+    "communicator": "ssh",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_timeout": "2h",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
+  },
   "builders": [
     {
       "type": "vmware-iso",
-      "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
-      "iso_checksum_type": "md5",
-      "iso_checksum": "5e4ecb86fd8619641f1d58f96e8561ec",
-      "headless": true,
-      "boot_wait": "2m",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "2h",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "headless": "{{ user `headless` }}",
+      "boot_wait": "{{ user `boot_wait` }}",
+      "communicator": "{{ user `communicator` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_timeout": "{{ user `ssh_timeout` }}",
+      "shutdown_command": "{{ user `shutdown_command` }}",
       "guest_os_type": "windows8srv-64",
       "tools_upload_flavor": "windows",
       "disk_size": 61440,
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
-        "./answer_files/win81x64-pro/Autounattend.xml",
+        "./answer_files/win81x64-pro/ssh/Autounattend.xml",
+        ".scripts/_packer_config.cmd",
+        "./scripts/oracle-cert.cer",
+        "./scripts/customize-windows.bat",
+        "./scripts/openssh.ps1",
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
+        "./scripts/fixnetwork.ps1"
       ],
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
@@ -32,23 +49,27 @@
     },
     {
       "type": "virtualbox-iso",
-      "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
-      "iso_checksum_type": "md5",
-      "iso_checksum": "5e4ecb86fd8619641f1d58f96e8561ec",
-      "headless": true,
-      "boot_wait": "2m",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "2h",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "headless": "{{ user `headless` }}",
+      "boot_wait": "{{ user `boot_wait` }}",
+      "communicator": "{{ user `communicator` }}",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_timeout": "{{ user `ssh_timeout` }}",
+      "shutdown_command": "{{ user `shutdown_command` }}",
       "guest_os_type": "Windows81_64",
       "disk_size": 61440,
       "floppy_files": [
-        "./answer_files/win81x64-pro/Autounattend.xml",
+        "./answer_files/win81x64-pro/ssh/Autounattend.xml",
+        ".scripts/_packer_config.cmd",
+        "./scripts/oracle-cert.cer",
+        "./scripts/customize-windows.bat",
+        "./scripts/openssh.ps1",
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1",
-        "./scripts/oracle-cert.cer"
+        "./scripts/fixnetwork.ps1"
       ],
       "vboxmanage": [
         [
@@ -72,12 +93,11 @@
       "remote_path": "/tmp/script.bat",
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "scripts": [
-        "./scripts/vm-guest-tools.bat",
+        "./scripts/vmtool.bat",
         "./scripts/chef.bat",
         "./scripts/vagrant-ssh.bat",
-        "./scripts/disable-auto-logon.bat",
-        "./scripts/enable-rdp.bat",
         "./scripts/compile-dotnet-assemblies.bat",
+        "./scripts/disable-auto-logon.bat",
         "./scripts/compact.bat"
       ]
     },
@@ -93,7 +113,7 @@
       "type": "vagrant",
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/win81x64-pro.box",
-      "vagrantfile_template": "vagrant_files/vagrantfile-win81x64-pro.template"
+      "vagrantfile_template": "vagrant_files/vagrantfile-win81x64-pro_ssh.template"
     }
   ]
 }
