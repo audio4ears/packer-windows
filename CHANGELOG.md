@@ -1,9 +1,22 @@
-## Unreleased
+## v1.25 (Oct 18, 2015)
 
-* Clarified use of the `<Key>` element in Windows 8.1 autounattend file (#114)
-* Fixed issue with OpenSSH / Packer race condition (#113)
-* Fixed issue with Windows 8.1 product key and computer name (#121)
-* Fixed issue where disk size would always be 60GB regardless of value in packer template (#117)
+FEATURES:
+
+- rewrite .bat scripts using powershell
+- scripts/compact.bat: update 7-zip download url from sourceforge.net to 7-zip.org 
+- scripts/vmtool.bat: update virtualbox tools from 4.3.26 to 5.0.4
+- vagrant_files/vagrantfile-win81x64-pro_winrm.template: create win81x64 winrm vagrantfile
+- scripts/compact.ps1: powershell version of compact.bat
+- scripts/compile-dotnet-assemblies.ps1: powershell version of ompile-dotnet-assemblies.bat
+- scripts/disable-auto-logon.ps1: powershell version of disable-auto-logon.bat
+- scripts/install-chef-client.ps1: powershell version of install-chef-client.bat
+- scripts/install-vmtools.ps1: powershell version of install-vmtools.bat
+- scripts/windows-update.ps1: rewrite windows-update script
+
+## v1.24 (April 1st, 2015)
+
+* Forked from joefitzgerald (https://github.com/joefitzgerald/packer-windows)
+* Maintaining project in parellel
 
 ## v1.23 (Nov 5th, 2014)
 
