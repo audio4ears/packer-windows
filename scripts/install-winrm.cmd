@@ -37,9 +37,9 @@ echo ==^> Changing remote UAC account policy
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
 
-echo ==^> Blocking WinRM port 5985 on the firewall
-netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
+::echo ==^> Blocking WinRM port 5985 on the firewall
+::netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
+::@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
 
 echo ==^> Configuring Windows Remote Management (WinRM) service
 
@@ -76,21 +76,21 @@ timeout 5
 sc query winrm | findstr "RUNNING" >nul
 if errorlevel 1 goto winrm_not_running
 
-echo ==^> Stopping winrm service
-sc stop winrm
+::echo ==^> Stopping winrm service
+::sc stop winrm
 
 :is_winrm_running
 
 timeout 1
 
-sc query winrm | findstr "STOPPED" >nul
-if errorlevel 1 goto is_winrm_running
+::sc query winrm | findstr "STOPPED" >nul
+::if errorlevel 1 goto is_winrm_running
 
 :winrm_not_running
 
-echo ==^> Unblocking WinRM port 5985 on the firewall
-netsh advfirewall firewall delete rule name="winrm"
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall delete rule name="winrm"
+::echo ==^> Unblocking WinRM port 5985 on the firewall
+::netsh advfirewall firewall delete rule name="winrm"
+::@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall delete rule name="winrm"
 
 timeout 1
 
@@ -109,11 +109,11 @@ if errorlevel 1 (
   @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall set rule group="Windows Remote Management" new enable=yes
 )
 
-netsh advfirewall firewall add rule name="winrm" dir=in action=allow protocol=TCP localport=5985
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall add rule name="winrm"  dir=in action=allow protocol=TCP localport=5985
+::netsh advfirewall firewall add rule name="winrm" dir=in action=allow protocol=TCP localport=5985
+::@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall add rule name="winrm"  dir=in action=allow protocol=TCP localport=5985
 
-echo ==^> Starting winrm service
-sc start winrm
+::echo ==^> Starting winrm service
+::sc start winrm
 
 :: wait for winrm service to finish starting
 timeout 5
