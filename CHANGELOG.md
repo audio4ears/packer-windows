@@ -1,3 +1,11 @@
+# Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/).
+
+## [Unreleased](unreleased)
+
+- no new features in development at this time
+
 ## v1.25 (Oct 18, 2015)
 
 FEATURES:
@@ -7,11 +15,11 @@ FEATURES:
 - scripts/vmtool.bat: update virtualbox tools from 4.3.26 to 5.0.4
 - vagrant_files/vagrantfile-win81x64-pro_winrm.template: create win81x64 winrm vagrantfile
 - scripts/compact.ps1: powershell version of compact.bat
-- scripts/compile-dotnet-assemblies.ps1: powershell version of ompile-dotnet-assemblies.bat
+- scripts/compile-dotnet-assemblies.ps1: powershell version of compile-dotnet-assemblies.bat
 - scripts/disable-auto-logon.ps1: powershell version of disable-auto-logon.bat
 - scripts/install-chef-client.ps1: powershell version of install-chef-client.bat
 - scripts/install-vmtools.ps1: powershell version of install-vmtools.bat
-- scripts/windows-update.ps1: rewrite windows-update script
+- scripts/windows-update.ps1: rewrite windows-update script. disable KB3000850
 
 ## v1.24 (April 1st, 2015)
 
