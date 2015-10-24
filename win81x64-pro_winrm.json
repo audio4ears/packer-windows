@@ -3,9 +3,6 @@
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X64FREE_EN-US_DV9.ISO",
     "iso_checksum": "ee63618e3be220d86b993c1abbcf32eb",
     "iso_checksum_type": "md5",
-    "vm_memory": "2048",
-    "vm_cpu": "2",
-		"vm_disk": "61440",
     "headless": "false",
     "boot_wait": "2m",
     "communicator": "winrm",
@@ -31,7 +28,7 @@
       "shutdown_timeout": "{{user `shutdown_timeout`}}",
       "guest_os_type": "windows8srv-64",
       "tools_upload_flavor": "windows",
-      "disk_size": "{{user `vm_disk`}}",
+      "disk_size": 61440,
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
@@ -45,8 +42,8 @@
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
         "RemoteDisplay.vnc.port": "5900",
-        "memsize": "{{user `vm_memory`}}",
-        "numvcpus": "{{user `vm_cpus`}}",
+        "memsize": "2048",
+        "numvcpus": "2",
         "scsi0.virtualDev": "lsisas1068"
       }
     },
@@ -65,7 +62,7 @@
       "shutdown_timeout": "{{user `shutdown_timeout`}}",
       "guest_os_type": "Windows81_64",
       "guest_additions_mode": "attach",
-      "disk_size": "{{user `vm_disk`}}",
+      "disk_size": 61440,
       "floppy_files": [
         "./answer_files/win81x64-pro/winrm/Autounattend.xml",
         "./scripts/oracle-cert.cer",
@@ -80,13 +77,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "{{user `vm_memory`}}"
+          "2046"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "{{user `vm_cpus`}}"
+          "2"
         ]
       ]
     }
