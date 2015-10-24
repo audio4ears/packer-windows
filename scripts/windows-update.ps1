@@ -1,4 +1,28 @@
-﻿#------------------------------------------------------------------------------
+﻿Param (
+  #Pre search criteria
+  [parameter(ValueFromPipelineByPropertyName=$true)]
+  [ValidateSet("Driver", "Software")]
+  [String]$UpdateType="",
+  
+  #Post search criteria
+  [parameter(ValueFromPipelineByPropertyName=$true)]
+  [String[]]$Category="",
+  [parameter(ValueFromPipelineByPropertyName=$true)]
+  [String[]]$KBArticleID,  
+  [parameter(ValueFromPipelineByPropertyName=$true)]
+  [String[]]$NotKBArticleID,
+  
+  #Connection options
+  [String]$ServiceID,
+  [Switch]$WindowsUpdate,
+  [Switch]$MicrosoftUpdate,
+  
+  #Mode options
+  [Switch]$AutoReboot,
+  [Switch]$IgnoreReboot
+)
+
+#------------------------------------------------------------------------------
 # Function: Print-Report
 #------------------------------------------------------------------------------
 Function Print-Report ($report) {
@@ -24,7 +48,7 @@ $Search = "IsInstalled = 0 and Type = 'Software'";
 $Category = @("Critical Updates","Security Updates");
 $AutoReboot = $false;
 $IgnoreReboot = $true;
-
+$NotKBArticleID = @("KB3000850");
 
 #------------------------------------------------------------------------------
 # MAIN
@@ -110,6 +134,18 @@ Foreach($Update in $objResults.Updates) {
     Else {
       $UpdateAccess = $true;
       Break;
+    }
+  }
+
+  If($KBArticleID -ne $null -and $UpdateAccess -eq $true) {
+    If(!($KBArticleID -match $Update.KBArticleIDs -and "" -ne $Update.KBArticleIDs)) {
+      $UpdateAccess = $false;
+    }
+  }
+
+  If($NotKBArticleID -ne $null -and $UpdateAccess -eq $true) {
+    If($NotKBArticleID -match $Update.KBArticleIDs -and "" -ne $Update.KBArticleIDs) {
+      $UpdateAccess = $false;
     }
   }
 
