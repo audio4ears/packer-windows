@@ -257,3 +257,5 @@ if ($sysinfo.isServer) {
                      -Value 0 `
                      -Force | Out-Null;
 }
+
+Start-Sleep -s 10;
