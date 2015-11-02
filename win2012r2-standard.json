@@ -98,6 +98,7 @@
         "./scripts/customize-windows.ps1",
         "./scripts/install-chef-client.ps1",
         "./scripts/install-puppet-client.ps1",
+        "./scripts/disable-auto-login.ps1",
         "./scripts/compact-windows.ps1",
         "./scripts/sysprep-windows.ps1"
       ]
