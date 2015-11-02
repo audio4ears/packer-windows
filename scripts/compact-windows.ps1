@@ -81,6 +81,19 @@ Remove-Item $env:TEMP\* -Recurse -Force -ErrorAction Ignore;
 write-host "==> Removing Windows Temp files";
 Remove-Item $env:windir\TEMP\* -Recurse -Force -ErrorAction Ignore;
 
+# cleanup winsxs folder
+write-host "Cleaning Winsxs Folder";
+$arguments = @("/online", "/Cleanup-Image", "/StartComponentCleanup", "/ResetBase");
+Start-Process -FilePath dism.exe `
+                -ArgumentList $arguments `
+                -Wait `
+                -PassThru;
+$arguments = @("/online", "/Cleanup-Image", "/SPSuperseded");
+Start-Process -FilePath dism.exe `
+                -ArgumentList $arguments `
+                -Wait `
+                -PassThru;
+
 
 # ----- COMPACT OS -----
 
