@@ -91,7 +91,7 @@ if ( ($sysinfo.Version.Major -ge 6) -and (1,3,4,5 -notcontains $sysinfo.DomainRo
 # -----INSTALL WINRM ---
 
 # install winrm
-Write-Host "==> Installing WinRM";
+Write-Host "==> Enabling WinRM";
 Enable-PSRemoting -SkipNetworkProfileCheck -Force;
 Set-Item WSMan:\localhost\MaxTimeoutms 1800000 -Force;
 Set-Item WSMan:\localhost\Client\TrustedHosts * -Force;
