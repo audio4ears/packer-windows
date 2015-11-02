@@ -89,8 +89,8 @@ if ( ($sysinfo.Version.Major -ge 6) -and (1,3,4,5 -notcontains $sysinfo.DomainRo
 
 # disable find other machines on the network prompt
 write-host "==> Disabling new network prompt";
-if (!(Test-Path -Path HKLM:\System\CurrentControlSet\Control\Network\NewNetworkWindowOff)) {
-    New-Item -Path HKLM:\System\CurrentControlSet\Control\Network\NewNetworkWindowOff `
+if (!(Test-Path -Path HKLM:\SYSTEM\CurrentControlSet\Control\Network\NewNetworkWindowOff)) {
+    New-Item -Path HKLM:\SYSTEM\CurrentControlSet\Control\Network\NewNetworkWindowOff `
              -Force | Out-Null;
 }
 
@@ -140,6 +140,10 @@ New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\
 
 # set control panel icons to small
 write-host "==> Setting Control Panel icons to small";
+If (!(Test-Path -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel")) {
+  New-Item -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel `
+           -Force | Out-Null;
+}
 New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel `
                  -Name AllItemsIconView `
                  -PropertyType DWord `
@@ -172,7 +176,7 @@ New-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\
 
 # item check boxes
 write-host "==> Setting item check boxes flag to disable";
-New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
+New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
                  -Name AutoCheckSelect `
                  -PropertyType DWord `
                  -Value 0 `
@@ -180,7 +184,7 @@ New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\
 
 # show file extensions
 write-host "==> Setting show file extensions flag to enable";
-New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
+New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
                  -Name HideFileExt `
                  -PropertyType DWord `
                  -Value 0 `
@@ -188,7 +192,7 @@ New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\
 
 # hide hidden files and folders
 write-host "==> Setting hide hidden files and folders flag to disable";
-New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
+New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
                  -Name Hidden `
                  -PropertyType DWord `
                  -Value 2 `
@@ -196,12 +200,12 @@ New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\
 
 # display full path
 write-host "==> Setting display full path flag to enable";
-New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
+New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
                  -Name FullPath `
                  -PropertyType DWord `
                  -Value 1 `
                  -Force | Out-Null;
-New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
+New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced `
                  -Name FullPathAddress `
                  -PropertyType DWord `
                  -Value 1 `
@@ -257,5 +261,3 @@ if ($sysinfo.isServer) {
                      -Value 0 `
                      -Force | Out-Null;
 }
-
-Start-Sleep -s 10;
