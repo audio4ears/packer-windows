@@ -9,7 +9,7 @@
     "com_username": "Administrator",
     "com_password": "vagrant",
     "com_timeout": "4h",
-    "shutdown_command": "C:\\Windows\\System32\\Sysprep\\sysprep.exe \/generalize \/oobe \/shutdown \/unattend:C:\\Windows\\System32\\Sysprep\\Unattend.xml",
+    "shutdown_command": "C:\\Windows\\System32\\Sysprep\\sysprep.exe \/generalize \/oobe \/shutdown",
     "shutdown_timeout": "30m"
   },
   "builders": [
