@@ -32,8 +32,8 @@
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
-        "./answer_files/win2012r2-standard/Autounattend.xml",
-        "./answer_files/win2012r2-standard/Unattend.xml",
+        "./answer_files/win2012r2-std/Autounattend.xml",
+        "./answer_files/win2012r2-std/Unattend.xml",
         "./scripts/SetupComplete.cmd",
         "./scripts/customize-windows.ps1",
         "./scripts/enable-microsoft-update.ps1",
@@ -65,8 +65,8 @@
       "guest_additions_mode": "attach",
       "disk_size": 61440,
       "floppy_files": [
-        "./answer_files/win2012r2-standard/Autounattend.xml",
-        "./answer_files/win2012r2-standard/Unattend.xml",
+        "./answer_files/win2012r2-std/Autounattend.xml",
+        "./answer_files/win2012r2-std/Unattend.xml",
         "./scripts/oracle-cert.cer",
         "./scripts/SetupComplete.cmd",
         "./scripts/customize-windows.ps1",
@@ -108,8 +108,8 @@
     {
       "type": "vagrant",
       "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/win2012r2-standard.box",
-      "vagrantfile_template": "vagrant_files/win2012r2-standard/Vagrantfile"
+      "output": "box/{{.Provider}}/win2012r2-std.box",
+      "vagrantfile_template": "vagrant_files/win2012r2-std/Vagrantfile"
     }
   ]
 }
