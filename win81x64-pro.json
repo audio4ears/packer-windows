@@ -1,16 +1,16 @@
 {
   "variables": {
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X64FREE_EN-US_DV9.ISO",
+    "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X64FREE_EN-US_DV9.ISO",
     "iso_checksum": "ee63618e3be220d86b993c1abbcf32eb",
     "iso_checksum_type": "md5",
-    "headless": "false",
+    "headless": "true",
     "boot_wait": "2m",
     "communicator": "winrm",
-    "com_username": "vagrant",
+    "com_username": "Administrator",
     "com_password": "vagrant",
     "com_timeout": "4h",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-    "shutdown_timeout": "20m"
+    "shutdown_command": "C:\\Windows\\System32\\Sysprep\\sysprep.exe \/generalize \/oobe \/shutdown \/unattend:C:\\Windows\\System32\\Sysprep\\Unattend.xml",
+    "shutdown_timeout": "30m"
   },
   "builders": [
     {
@@ -32,12 +32,13 @@
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
-        "./answer_files/win81x64-pro/winrm/Autounattend.xml",
+        "./answer_files/win81x64-pro/Autounattend.xml",
+        "./answer_files/win81x64-pro/Unattend.xml",
+        "./scripts/SetupComplete.cmd",
         "./scripts/customize-windows.ps1",
-        "./scripts/microsoft-update.ps1",
-        "./scripts/windows-update.ps1",
-        "./scripts/fixnetwork.ps1",
-        "./scripts/install-winrm.ps1"
+        "./scripts/enable-microsoft-update.ps1",
+        "./scripts/update-windows.ps1",
+        "./scripts/enable-winrm.ps1"
       ],
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
@@ -64,13 +65,14 @@
       "guest_additions_mode": "attach",
       "disk_size": 61440,
       "floppy_files": [
-        "./answer_files/win81x64-pro/winrm/Autounattend.xml",
+        "./answer_files/win81x64-pro/Autounattend.xml",
+        "./answer_files/win81x64-pro/Unattend.xml",
         "./scripts/oracle-cert.cer",
+        "./scripts/SetupComplete.cmd",
         "./scripts/customize-windows.ps1",
-        "./scripts/microsoft-update.ps1",
-        "./scripts/windows-update.ps1",
-        "./scripts/fixnetwork.ps1",
-        "./scripts/install-winrm.ps1"
+        "./scripts/enable-microsoft-update.ps1",
+        "./scripts/update-windows.ps1",
+        "./scripts/enable-winrm.ps1"
       ],
       "vboxmanage": [
         [
@@ -93,19 +95,21 @@
       "type": "powershell",
       "scripts": [
         "./scripts/install-vmtools.ps1",
+        "./scripts/customize-windows.ps1",
         "./scripts/install-chef-client.ps1",
-        "./scripts/disable-auto-logon.ps1",
-        "./scripts/compile-dotnet-assemblies.ps1",
-        "./scripts/compact.ps1"
+        "./scripts/install-puppet-client.ps1",
+        "./scripts/compact-windows.ps1",
+        "./scripts/sysprep-windows.ps1"
       ]
     }
   ],
   "post-processors": [
     {
       "type": "vagrant",
+      "compression_level": 6,
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/win81x64-pro.box",
-      "vagrantfile_template": "vagrant_files/win81x64-pro/winrm/Vagrantfile"
+      "vagrantfile_template": "vagrant_files/win81x64-pro/Vagrantfile"
     }
   ]
 }
