@@ -1,0 +1,143 @@
+{
+  "variables": {
+    "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X64FREE_EN-US_DV9.ISO",
+    "iso_checksum": "ee63618e3be220d86b993c1abbcf32eb",
+    "iso_checksum_type": "md5",
+    "headless": "false",
+    "boot_wait": "2m",
+    "communicator": "winrm",
+    "com_username": "vagrant",
+    "com_password": "vagrant",
+    "com_timeout": "4h",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "shutdown_timeout": "30m",
+    "atlas_token": "{{env `ATLAS_TOKEN`}}",
+    "atlas_username": "{{env `ATLAS_USERNAME`}}",
+    "atlas_artifact_name": "win81x64-pro",
+    "atlas_artifact_ver": "0.0.1",
+    "atlas_artificat_desc": "Windows 8.1 x64 Professional"
+  },
+  "builders": [
+    {
+      "type": "vmware-iso",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "headless": "{{user `headless`}}",
+      "boot_wait": "{{user `boot_wait`}}",
+      "communicator": "{{user `communicator`}}",
+      "winrm_username": "{{user `com_username`}}",
+      "winrm_password": "{{user `com_password`}}",
+      "winrm_timeout": "{{user `com_timeout`}}",
+      "shutdown_command": "{{user `shutdown_command`}}",
+      "shutdown_timeout": "{{user `shutdown_timeout`}}",
+      "guest_os_type": "windows8srv-64",
+      "tools_upload_flavor": "windows",
+      "disk_size": 61440,
+      "vnc_port_min": 5900,
+      "vnc_port_max": 5980,
+      "floppy_files": [
+        "./answer_files/win81x64-pro/Autounattend.xml",
+        "./scripts/set-network-private.ps1",
+        "./scripts/customize-windows.ps1",
+        "./scripts/enable-microsoft-update.ps1",
+        "./scripts/update-windows.ps1",
+        "./scripts/enable-winrm.ps1"
+      ],
+      "vmx_data": {
+        "RemoteDisplay.vnc.enabled": "false",
+        "RemoteDisplay.vnc.port": "5900",
+        "memsize": "2048",
+        "numvcpus": "2",
+        "scsi0.virtualDev": "lsisas1068"
+      }
+    },
+    {
+      "type": "virtualbox-iso",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "headless": "{{user `headless`}}",
+      "boot_wait": "{{user `boot_wait`}}",
+      "communicator": "{{user `communicator`}}",
+      "winrm_username": "{{user `com_username`}}",
+      "winrm_password": "{{user `com_password`}}",
+      "winrm_timeout": "{{user `com_timeout`}}",
+      "shutdown_command": "{{user `shutdown_command`}}",
+      "shutdown_timeout": "{{user `shutdown_timeout`}}",
+      "guest_os_type": "Windows81_64",
+      "guest_additions_mode": "attach",
+      "disk_size": 61440,
+      "floppy_files": [
+        "./answer_files/win81x64-pro/Autounattend.xml",
+        "./scripts/oracle-cert.cer",
+        "./scripts/set-network-private.ps1",
+        "./scripts/customize-windows.ps1",
+        "./scripts/enable-microsoft-update.ps1",
+        "./scripts/update-windows.ps1",
+        "./scripts/enable-winrm.ps1"
+      ],
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "2046"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "2"
+        ]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "scripts": [
+        "./scripts/install-vmtools.ps1",
+        "./scripts/install-chef-client.ps1",
+        "./scripts/disable-auto-logon.ps1",
+        "./scripts/compile-dotnet-assemblies.ps1",
+        "./scripts/compact-windows.ps1"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "compression_level": 6,
+      "keep_input_artifact": false,
+      "output": "box/{{.Provider}}/win81x64-pro.box",
+      "vagrantfile_template": "vagrant_files/win81x64-pro/Vagrantfile"
+    },
+    {
+      "type": "atlas",
+      "token": "{{user `atlas_token`}}",
+      "only": ["vmware-iso"],
+      "artifact": "{{user `atlas_username`}}/{{user `atlas_artifact_name`}}",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+        "created_at": "{{timestamp}}",
+        "provider": "vmware_desktop",
+        "version": "{{user `atlas_artifact_ver`}}",
+        "description": "{{user `atlas_artificat_desc`}}"
+      }
+    },
+    {
+      "type": "atlas",
+      "token": "{{user `atlas_token`}}",
+      "only": ["virtualbox-iso"],
+      "artifact": "{{user `atlas_username`}}/{{user `atlas_artifact_name`}}",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+        "created_at": "{{timestamp}}",
+        "provider": "virtualbox",
+        "version": "{{user `atlas_artifact_ver`}}",
+        "description": "{{user `atlas_artificat_desc`}}"
+      }
+    }
+  ]
+}
