@@ -1,43 +1,44 @@
 {
   "variables": {
-    "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO",
-    "iso_checksum": "458ff91f8abc21b75cb544744bf92e6a",
+    "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
+    "iso_checksum": "5b5e08c490ad16b59b1d9fab0def883a",
     "iso_checksum_type": "md5",
     "headless": "false",
     "boot_wait": "2m",
     "communicator": "winrm",
-    "winrm_username": "vagrant",
-    "winrm_password": "vagrant",
-    "winrm_timeout": "2h",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
+    "com_username": "Administrator",
+    "com_password": "vagrant",
+    "com_timeout": "4h",
+    "shutdown_command": "C:\\Windows\\System32\\Sysprep\\sysprep.exe \/generalize \/oobe \/shutdown",
+		"shutdown_timeout": "30m"
   },
   "builders": [
     {
       "type": "vmware-iso",
-      "iso_url": "{{ user `iso_url` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-      "headless": "{{ user `headless` }}",
-      "boot_wait": "{{ user `boot_wait` }}",
-      "communicator": "{{ user `communicator` }}",
-      "winrm_username": "{{ user `winrm_username` }}",
-      "winrm_password": "{{ user `winrm_password` }}",
-      "winrm_timeout": "{{ user `winrm_timeout` }}",
-      "shutdown_command": "{{ user `shutdown_command` }}",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "headless": "{{user `headless`}}",
+      "boot_wait": "{{user `boot_wait`}}",
+      "communicator": "{{user `communicator`}}",
+      "winrm_username": "{{user `com_username`}}",
+      "winrm_password": "{{user `com_password`}}",
+      "winrm_timeout": "{{user `com_timeout`}}",
+      "shutdown_command": "{{user `shutdown_command`}}",
+			"shutdown_timeout": "{{user `shutdown_timeout`}}",
       "guest_os_type": "windows8srv-64",
       "tools_upload_flavor": "windows",
       "disk_size": 61440,
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
-        "./answer_files/win2012r2-standardcore/winrm/Autounattend.xml",
-        "./scripts/_packer_config.cmd",
-        "./scripts/oracle-cert.cer",
-        "./scripts/customize-windows.bat",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/fixnetwork.ps1",
-        "./scripts/install-winrm.cmd"
+        "./answer_files/win2012r2-standardcore/Autounattend.xml",
+        "./answer_files/win2012r2-standardcore/Unattend.xml",
+        "./scripts/SetupComplete.cmd",
+        "./scripts/customize-windows.ps1",
+        "./scripts/enable-microsoft-update.ps1",
+        "./scripts/update-windows.ps1",
+        "./scripts/enable-winrm.ps1"
       ],
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
@@ -49,27 +50,29 @@
     },
     {
       "type": "virtualbox-iso",
-      "iso_url": "{{ user `iso_url` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-      "headless": "{{ user `headless` }}",
-      "boot_wait": "{{ user `boot_wait` }}",
-      "communicator": "{{ user `communicator` }}",
-      "winrm_username": "{{ user `winrm_username` }}",
-      "winrm_password": "{{ user `winrm_password` }}",
-      "winrm_timeout": "{{ user `winrm_timeout` }}",
-      "shutdown_command": "{{ user `shutdown_command` }}",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "headless": "{{user `headless`}}",
+      "boot_wait": "{{user `boot_wait`}}",
+      "communicator": "{{user `communicator`}}",
+      "winrm_username": "{{user `com_username`}}",
+      "winrm_password": "{{user `com_password`}}",
+      "winrm_timeout": "{{user `com_timeout`}}",
+      "shutdown_command": "{{user `shutdown_command`}}",
+			"shutdown_timeout": "{{user `shutdown_timeout`}}",
       "guest_os_type": "Windows2012_64",
+      "guest_additions_mode": "attach",
       "disk_size": 61440,
       "floppy_files": [
-        "./answer_files/win2012r2-standardcore/winrm/Autounattend.xml",
-        "./scripts/_packer_config.cmd",
+        "./answer_files/win2012r2-standardcore/Autounattend.xml",
+        "./answer_files/win2012r2-standardcore/Unattend.xml",
         "./scripts/oracle-cert.cer",
-        "./scripts/customize-windows.bat",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/fixnetwork.ps1",
-        "./scripts/install-winrm.cmd"
+        "./scripts/SetupComplete.cmd",
+        "./scripts/customize-windows.ps1",
+        "./scripts/enable-microsoft-update.ps1",
+        "./scripts/update-windows.ps1",
+        "./scripts/enable-winrm.ps1"
       ],
       "vboxmanage": [
         [
@@ -89,13 +92,14 @@
   ],
   "provisioners": [
     {
-      "type": "windows-shell",
+      "type": "powershell",
       "scripts": [
-        "./scripts/vmtool.bat",
-        "./scripts/chef.bat",
-        "./scripts/disable-auto-logon.bat",
-        "./scripts/compile-dotnet-assemblies.bat",
-        "./scripts/compact.bat"
+        "./scripts/install-vmtools.ps1",
+        "./scripts/customize-windows.ps1",
+        "./scripts/install-chef-client.ps1",
+        "./scripts/install-puppet-client.ps1",
+        "./scripts/compact-windows.ps1",
+        "./scripts/sysprep-windows.ps1"
       ]
     }
   ],
@@ -104,7 +108,7 @@
       "type": "vagrant",
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/win2012r2-standardcore.box",
-      "vagrantfile_template": "vagrant_files/vagrantfile-win2012r2-standardcore_winrm.template"
+      "vagrantfile_template": "vagrant_files/win2012r2-standardcore/Vagrantfile"
     }
   ]
 }
