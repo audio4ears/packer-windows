@@ -129,7 +129,6 @@
                     <Description>Disable password expiration for Administrator user</Description>
                 </SynchronousCommand>
                 <!-- WITH WINDOWS UPDATES -->
-                <!--
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>powershell.exe -NoLogo -ExecutionPolicy Bypass -File A:\enable-microsoft-update.ps1</CommandLine>
                     <Order>98</Order>
@@ -141,7 +140,6 @@
                     <Order>99</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
-                -->
                 <!-- END WITH WINDOWS UPDATES -->
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>powershell.exe -NoLogo -ExecutionPolicy Bypass -File A:\enable-winrm.ps1</CommandLine>
