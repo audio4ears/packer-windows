@@ -1,41 +1,84 @@
 # Windows Templates for Packer
 
-### Introduction
+## Introduction
 
 This repository contains [Packer](https://www.packer.io/) and [Vagrant](https://www.vagrantup.com/) templates that can be used to create Windows Virtual Machines for use with [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or [VMWare Fusion](https://www.vmware.com/products/fusion). By default, the templates provided are configured to use Windows 180 day evaluation licenses but can be modified to use MDT, MSDN, or Microsoft Volume Licenses instead.
 
-### Requirements
+## What you need
 
-- [Packer](https://github.com/mitchellh/packer/blob/master/CHANGELOG.md) `0.8.0` or greater is required.
-- [Vagrant](https://www.vagrantup.com/) `1.7.0` or greater is requried
+- [packer](https://github.com/mitchellh/packer/blob/master/CHANGELOG.md) ~> `0.8.0`
+- [vagrant](https://www.vagrantup.com/) ~> `1.7.0`
+- [virtualbox](https://www.virtualbox.org/wiki/Downloads) ~> `5.0.0`
 
-### Available Windows Versions
 
-The following Windows versions are known to work (built with VMware Fusion 8.0.0 and VirtualBox 5.0.6):
+## Step 1: Build a box with Packer
 
- * Windows 8.1
- * Windows 2012 R2
- * Windows 2012 R2 Core
+To build a box, look below for your preferred provider type and execute the Packer command that corresponds to your desired version of Windows. Once complete the resulting box will be saved to the `./box/` directory within this project.
 
-## Usage
-
-To build a Windows Server 2012 R2 Standard Vagrant box for VirtualBox:
-
+<!--
 #### VirtualBox
+-->
 
-| OS | Command |
-|----|---------|
-| Windows 8.1 x64 Professional | ``` $ packer build --only=virtualbox-iso win81x64-pro.json ```
-| Windows Server 2012 R2 Standard | ``` $ packer build --only=virtualbox-iso win2012r2-std.json ``` |
-| Windows Server 2012 R2 Standard Core | ``` $ packer build --only=virtualbox-iso win2012r2-std-core.json ``` |
+```bash
+# Windows 8.1 x64 Professional
+$ packer build --only=virtualbox-iso win81x64-pro.json
+```
 
+```bash
+# Windows Server 2012 R2 Standard
+$ packer build --only=virtualbox-iso win2012r2-std.json
+```
+
+```bash
+# Windows Server 2012 R2 Standard Core
+$ packer build --only=virtualbox-iso win2012r2-std-core.json
+```
+
+<!--
 #### VMware Fusion
 
-| OS | Command |
-|----|---------|
-| Windows 8.1 x64 Professional | ``` $ packer build --only=vmware-iso win81x64-pro.json ```
-| Windows Server 2012 R2 Standard | ``` $ packer build --only=vmware-iso win2012r2-std.json ``` |
-| Windows Server 2012 R2 Standard Core | ``` $ packer build --only=vmware-iso win2012r2-std-core.json ``` |
+```bash
+# Windows 8.1 x64 Professional
+$ packer build --only=vmware-iso win81x64-pro.json
+
+# Windows Server 2012 R2 Standard
+$ packer build --only=vmware-iso win2012r2-std.json
+
+# Windows Server 2012 R2 Standard Core
+$ packer build --only=vmware-iso win2012r2-std-core.json
+```
+-->
+
+## Step 2: Add box to Vagrant
+
+Based on the Windows Version selected above in `Step 1`, locate and execute the corresponding Vagrant command from the list of options below.
+
+<!--
+#### VirtualBox
+-->
+
+```bash
+# Windows 8.1 x64 Professional
+$ vagrant box add --name win81x64-pro ./box/virtualbox/win81x64-pro.box
+```
+
+```bash
+# Windows Server 2012 R2 Standard
+$ vagrant box add --name win2012r2-std ./box/virtualbox/win2012r2-std.box
+```
+
+```bash
+# Windows Server 2012 R2 Standard Core
+$ vagrant box add --name win2012r2-std-core ./box/virtualbox/win2012r2-std-core.box
+```
+
+## Step 3: Start Windows VM
+
+Create a text file called `Vagrantfile` and include the following
+
+```yml
+# To be continued ...
+```
 
 ## Customizations
 
