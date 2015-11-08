@@ -13,9 +13,9 @@
     "shutdown_timeout": "30m",
     "atlas_token": "{{env `ATLAS_TOKEN`}}",
     "atlas_username": "{{env `ATLAS_USERNAME`}}",
-    "atlas_artifact_name": "win81x64-pro",
+    "atlas_artifact_name": "win81x64-ent",
     "atlas_artifact_ver": "0.0.1",
-    "atlas_artificat_desc": "Windows 8.1 x64 Professional"
+    "atlas_artificat_desc": "Windows 8.1 x64 Enterprise"
   },
   "builders": [
     {
@@ -37,8 +37,8 @@
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
-        "./answer_files/win81x64-pro/Autounattend.xml",
-        "./answer_files/win81x64-pro/Unattend.xml",
+        "./answer_files/win81x64-ent/Autounattend.xml",
+        "./answer_files/win81x64-ent/Unattend.xml",
         "./scripts/SetupComplete.cmd",
         "./scripts/customize-windows.ps1",
         "./scripts/enable-microsoft-update.ps1",
@@ -70,8 +70,8 @@
       "guest_additions_mode": "attach",
       "disk_size": 61440,
       "floppy_files": [
-        "./answer_files/win81x64-pro/Autounattend.xml",
-        "./answer_files/win81x64-pro/Unattend.xml",
+        "./answer_files/win81x64-ent/Autounattend.xml",
+        "./answer_files/win81x64-ent/Unattend.xml",
         "./scripts/oracle-cert.cer",
         "./scripts/SetupComplete.cmd",
         "./scripts/customize-windows.ps1",
@@ -114,8 +114,8 @@
       "type": "vagrant",
       "compression_level": 6,
       "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/win81x64-pro.box",
-      "vagrantfile_template": "vagrant_files/win81x64-pro/Vagrantfile"
+      "output": "box/{{.Provider}}/win81x64-ent.box",
+      "vagrantfile_template": "vagrant_files/win81x64-ent/Vagrantfile"
     },
     {
       "type": "atlas",

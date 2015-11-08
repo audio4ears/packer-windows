@@ -10,7 +10,10 @@
     "com_password": "vagrant",
     "com_timeout": "4h",
     "shutdown_command": "C:\\Windows\\System32\\Sysprep\\sysprep.exe \/generalize \/oobe \/shutdown",
-    "shutdown_timeout": "30m"
+    "shutdown_timeout": "30m",
+    "artifact_name": "win81x64-ent",
+    "artifact_ver": "0.0.1",
+    "artificat_desc": "Windows 8.1 x64 Enterprise"
   },
   "builders": [
     {
@@ -32,8 +35,8 @@
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
-        "./answer_files/win81x64-pro/Autounattend.xml",
-        "./answer_files/win81x64-pro/Unattend.xml",
+        "./answer_files/win81x64-ent/Autounattend.xml",
+        "./answer_files/win81x64-ent/Unattend.xml",
         "./scripts/SetupComplete.cmd",
         "./scripts/customize-windows.ps1",
         "./scripts/enable-microsoft-update.ps1",
@@ -65,8 +68,8 @@
       "guest_additions_mode": "attach",
       "disk_size": 61440,
       "floppy_files": [
-        "./answer_files/win81x64-pro/Autounattend.xml",
-        "./answer_files/win81x64-pro/Unattend.xml",
+        "./answer_files/win81x64-ent/Autounattend.xml",
+        "./answer_files/win81x64-ent/Unattend.xml",
         "./scripts/oracle-cert.cer",
         "./scripts/SetupComplete.cmd",
         "./scripts/customize-windows.ps1",
@@ -98,7 +101,7 @@
         "./scripts/customize-windows.ps1",
         "./scripts/install-chef-client.ps1",
         "./scripts/install-puppet-client.ps1",
-        "./scripts/disable-auto-login.ps1",
+        "./scripts/disable-auto-logon.ps1",
         "./scripts/compact-windows.ps1",
         "./scripts/sysprep-windows.ps1"
       ]
@@ -109,8 +112,8 @@
       "type": "vagrant",
       "compression_level": 6,
       "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/win81x64-pro.box",
-      "vagrantfile_template": "vagrant_files/win81x64-pro/Vagrantfile"
+      "output": "box/{{.Provider}}/{{user `artifact_name`}}.box",
+      "vagrantfile_template": "vagrant_files/{user `artifact_name`}}/Vagrantfile"
     }
   ]
 }

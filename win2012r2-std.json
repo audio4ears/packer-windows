@@ -10,7 +10,10 @@
     "com_password": "vagrant",
     "com_timeout": "4h",
     "shutdown_command": "C:\\Windows\\System32\\Sysprep\\sysprep.exe \/generalize \/oobe \/shutdown",
-    "shutdown_timeout": "30m"
+    "shutdown_timeout": "30m",
+    "artifact_name": "win2012r2-std",
+    "artifact_ver": "0.0.1",
+    "artificat_desc": "Windows Server 2012 R2 Standard"
   },
   "builders": [
     {
@@ -98,7 +101,7 @@
         "./scripts/customize-windows.ps1",
         "./scripts/install-chef-client.ps1",
         "./scripts/install-puppet-client.ps1",
-        "./scripts/disable-auto-login.ps1",
+        "./scripts/disable-auto-logon.ps1",
         "./scripts/compact-windows.ps1",
         "./scripts/sysprep-windows.ps1"
       ]
@@ -108,8 +111,8 @@
     {
       "type": "vagrant",
       "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/win2012r2-std.box",
-      "vagrantfile_template": "vagrant_files/win2012r2-std/Vagrantfile"
+      "output": "box/{{.Provider}}/{{user `artifact_name`}}.box",
+      "vagrantfile_template": "vagrant_files/{user `artifact_name`}}/Vagrantfile"
     }
   ]
 }
