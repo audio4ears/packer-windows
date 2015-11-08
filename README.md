@@ -59,7 +59,7 @@ $ vagrant init win2012r2-std-core box/virtualbox/win2012r2-std-core.box
 
 ## Step 3: Run the box in VirtualBox
 
-The command below with start the box in VirtualBox. By default this box will run headless, meaning no GUI interaction. To connect to the box via command line use `WinRM` natively in Windows or the [WinRM Ruby Gem](https://github.com/WinRb/WinRM) on OSX & Linux.
+The command below will start the box in VirtualBox. By default this box will run headless, meaning it runs without a display window. To connect to the box via command line use `WinRM` natively in Windows or the [WinRM Ruby Gem](https://github.com/WinRb/WinRM) in OSX & Linux.
 
 ```bash
 $ vagrant up
@@ -67,7 +67,7 @@ $ vagrant up
 
 ## Customizing
 
-Please the [README-CUSTOMIZE.md](https://github.com/audio4ears/packer-windows/blob/master/README-CUSTOMIZE.md) for customization instructions.
+By Customizing this build you can create vagrant boxes with alternative Windows versions, licensing models, and even align the build for Business use. To do so, please read the [README-CUSTOMIZE.md](https://github.com/audio4ears/packer-windows/blob/master/README-CUSTOMIZE.md) file for further instructions.
 
 ### Acknowledgements
 
